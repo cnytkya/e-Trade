@@ -1,0 +1,60 @@
+﻿@using System.Globalization
+@model ProductDto
+
+@{
+    ViewData["Title"] = "Ürün Silme Onayı";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">@ViewData["Title"]</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Main" asp-action="Index">Dashboard</a></li>
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Products" asp-action="Index">Ürünler</a></li>
+        <li class="breadcrumb-item active">Sil</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <i class="fas fa-exclamation-triangle me-1"></i>
+            Ürün Silme Uyarısı
+        </div>
+        <div class="card-body">
+            <p class="mb-3">Aşağıdaki ürünü silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve ürünün **fiziksel resim dosyası da sunucudan silinecektir.**</p>
+
+            <dl class="row">
+                <dt class="col-sm-3">Ürün Adı:</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">Fiyat:</dt>
+                <dd class="col-sm-9">@Model.Price?.ToString("C2", new CultureInfo("tr-TR"))</dd>
+
+                <dt class="col-sm-3">Alt Kategori:</dt>
+                <dd class="col-sm-9">@Model.SubcategoryName</dd>
+
+                <dt class="col-sm-3">Kategori:</dt>
+                <dd class="col-sm-9">@Model.CategoryName</dd>
+
+                <dt class="col-sm-3">Resim:</dt>
+                <dd class="col-sm-9">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Url.Content(Model.ImageUrl)" class="img-thumbnail" style="max-width: 150px; height: auto;" alt="Ürün Resmi" />
+                    }
+                    else
+                    {
+                        <span>Resim Yok</span>
+                    }
+                </dd>
+            </dl>
+
+            <hr />
+
+            <form asp-area="Admin" asp-controller="Products" asp-action="Delete" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger me-2"><i class="fas fa-trash"></i> Sil</button>
+                <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="btn btn-secondary"><i class="fas fa-times"></i> İptal</a>
+            </form>
+        </div>
+    </div>
+</div>

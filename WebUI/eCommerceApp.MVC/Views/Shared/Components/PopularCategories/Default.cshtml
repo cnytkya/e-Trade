@@ -1,0 +1,57 @@
+﻿@model List<eCommerceApp.MVC.Models.ViewModels.CategoryViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row g-4">
+        @foreach (var category in Model)
+        {
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                <a href="@category.Url" class="text-decoration-none category-link">
+                    <div class="category-card">
+                        @* <!-- Ürün Sayısı -->
+                        <div class="category-count">
+                            @category.ProductCount
+                        </div> *@
+
+                        <div class="category-icon" style="background: linear-gradient(135deg, @category.Color, var(--secondary-color));">
+                            <i class="@category.Icon"></i>
+                        </div>
+                        <h4 class="category-name">@category.Name</h4>
+                        <p class="text-muted category-product-count">@category.ProductCount+ Ürün</p>
+
+                        <!-- Hover efekti için ok ikonu -->
+                        <div class="category-hover-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <!-- Kategori yoksa veya yüklenemediyse fallback göster -->
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Yükleniyor...</span>
+        </div>
+        <p class="text-muted">Kategoriler yükleniyor...</p>
+
+        <!-- Fallback kategoriler -->
+        <div class="row g-4 mt-3">
+            @for (int i = 0; i < 4; i++)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                    <div class="category-card loading">
+                        <div class="category-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <h4>Kategori Yükleniyor</h4>
+                        <p class="text-muted">0+ Ürün</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

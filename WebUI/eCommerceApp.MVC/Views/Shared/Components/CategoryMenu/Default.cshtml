@@ -1,0 +1,31 @@
+﻿@using eCommerceApp.Application.DTOs.Category
+@model IEnumerable<CategoryDto>
+
+<ul class="dropdown-menu mega-menu" aria-labelledby="navbarDropdown">
+    <div class="mega-menu-content">
+        @foreach (var category in Model)
+        {
+            <div class="mega-menu-column">
+                <h6>
+                    @* Buraya kategoriye özel bir ikon eklenebilir *@
+                    <i class="fas fa-box me-2"></i>@category.Name
+                </h6>
+                @if (category.SubCategories != null && category.SubCategories.Any())
+                {
+                    @foreach (var subcategory in category.SubCategories)
+                    {
+                        <a class="dropdown-item" href="#">
+                            <span>@subcategory.Name</span>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a class="dropdown-item disabled" href="#">
+                        <span>Alt Kategori Yok</span>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+</ul>
